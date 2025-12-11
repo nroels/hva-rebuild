@@ -1,0 +1,13 @@
+# .gitignore for Astro and Strapi
+node_modules
+.DS_Store
+npm-debug.log
+yarn-error.log
+
+# Astro specific
+.astro/
+dist/
+
+# Strapi specific
+.env
+build/
