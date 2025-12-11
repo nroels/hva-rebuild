@@ -1,15 +1,39 @@
+---
+import '../styles/global.css';
+const { title } = Astro.props;
+import Header from '../components/Global/SiteHeader.jsx';
+import MenuContainer from '../components/Global/MenuContainer.jsx';
+import { fetchApi } from '../lib/strapi';
+
+const contactInfo = await fetchApi({
+	endpoint: 'contact',
+	wrappedByKey: 'data'
+});
+
+const projects = await fetchApi({
+	endpoint: 'projects',
+	wrappedByKey: 'data'
+});
+
+console.log("ASTRO SERVER DATA CHECK - Projects array length:", projects?.length);
+---
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <MenuContainer 
+		contactInfo={contactInfo}
+		projects={projects}
+		client:load
+	/>
+	<main>
 		<slot />
-	</body>
+	</main>
+  </body>
 </html>
 
 <style>

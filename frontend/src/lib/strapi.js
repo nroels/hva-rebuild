@@ -1,4 +1,14 @@
-export default async function fetchApi({
+export function getStrapiMedia(url) {
+    if (url == null) return null;
+
+    if (url.startsWith('/')) {
+        return `${import.meta.env.STRAPI_URL}${url}`;
+    }
+
+    return url;
+}
+
+export async function fetchApi({
     endpoint,
     query,
     wrappedByKey,
@@ -36,3 +46,4 @@ export default async function fetchApi({
 
     return data;
 }
+

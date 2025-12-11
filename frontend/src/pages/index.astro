@@ -1,11 +1,23 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { fetchApi, getStrapiMedia } from '../lib/strapi';
 import Layout from '../layouts/Layout.astro';
+import HeroLoop from '../components/Home/HeroLoop.jsx';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const homepage = await fetchApi({ 
+	endpoint: 'homepage',
+	wrappedByKey: 'data' 
+});
+
+const images = homepage.heroGallery;
+
+const imagesWithUrls = images.map(image => ({
+    ...image,
+    url: getStrapiMedia(image.url)
+}));
 ---
-
-<Layout>
-	<Welcome />
+<Layout title="Home">
+   <HeroLoop
+    client:only="react" 
+    images={imagesWithUrls} 
+  />
 </Layout>
