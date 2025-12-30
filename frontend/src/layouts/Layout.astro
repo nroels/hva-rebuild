@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title } = Astro.props;
+const { title, lockScroll = false } = Astro.props;
 import Header from '../components/Global/SiteHeader.jsx';
 import MenuContainer from '../components/Global/MenuContainer.jsx';
 import { fetchApi } from '../lib/strapi';
@@ -35,7 +35,7 @@ const projects = cleanedProjects.sort((a, b) => a.order - b.order);
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
   </head>
-  <body>
+  <body class={lockScroll ? "overflow-hidden" : ""}>
     <MenuContainer 
 		contactInfo={contactInfo}
 		projects={projects}

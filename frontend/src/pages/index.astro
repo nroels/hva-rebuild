@@ -15,7 +15,7 @@ const imagesWithUrls = images.map(image => ({
     url: getStrapiMedia(image.url)
 }));
 ---
-<Layout title="Home">
+<Layout title="Home" lockScroll={true}>
    <HeroLoop
     client:only="react" 
     images={imagesWithUrls} 
