@@ -4,18 +4,29 @@ const { title } = Astro.props;
 import Header from '../components/Global/SiteHeader.jsx';
 import MenuContainer from '../components/Global/MenuContainer.jsx';
 import { fetchApi } from '../lib/strapi';
+import { getStrapiMedia } from '../lib/strapi';
 
 const contactInfo = await fetchApi({
 	endpoint: 'contact',
 	wrappedByKey: 'data'
 });
 
-const projects = await fetchApi({
+const rawProjects = await fetchApi({
 	endpoint: 'projects',
 	wrappedByKey: 'data'
 });
 
-console.log("ASTRO SERVER DATA CHECK - Projects array length:", projects?.length);
+const cleanedProjects = rawProjects.map(project => ({
+	id: project.id,
+	order: project.order,
+	location: project.location,
+	date: project.date,
+	title: project.title,
+	slug: project.slug,
+	url: getStrapiMedia(project.gallery?.[0]?.url)
+}));
+
+const projects = cleanedProjects.sort((a, b) => a.order - b.order);
 ---
 <!doctype html>
 <html lang="en">
